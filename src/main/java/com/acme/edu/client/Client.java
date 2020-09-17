@@ -1,6 +1,7 @@
 package com.acme.edu.client;
 
 import com.acme.edu.Command;
+import com.acme.edu.ConfigPropertyValues;
 import com.acme.edu.ConsoleScanner;
 import com.acme.edu.Printer;
 
@@ -12,8 +13,9 @@ public class Client {
         Printer printer = new Printer();
         ConsoleScanner scanner = new ConsoleScanner();
         boolean needExit = false;
+        ConfigPropertyValues properties = new ConfigPropertyValues();
 
-        try (final Socket connection = new Socket("127.0.0.1", 10_000);
+        try (final Socket connection = new Socket(properties.getHost(), properties.getPort());
              final DataInputStream input = new DataInputStream(
                      new BufferedInputStream(
                              connection.getInputStream()));

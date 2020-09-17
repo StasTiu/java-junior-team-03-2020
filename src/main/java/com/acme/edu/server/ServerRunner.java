@@ -1,5 +1,6 @@
 package com.acme.edu.server;
 
+import com.acme.edu.ConfigPropertyValues;
 import com.acme.edu.Decorator;
 
 import java.io.*;
@@ -11,7 +12,9 @@ public class ServerRunner {
     public static void main(String[] args) {
         Decorator decorator = new Decorator();
         String message = "";
-        try (final ServerSocket connectionPortListener = new ServerSocket(10_000);
+        ConfigPropertyValues properties = new ConfigPropertyValues();
+
+        try (final ServerSocket connectionPortListener = new ServerSocket(properties.getPort());
              final Socket clientConnection = connectionPortListener.accept();
              final DataInputStream input = new DataInputStream(
                      new BufferedInputStream(
