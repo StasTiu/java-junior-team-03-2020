@@ -11,4 +11,8 @@ public class SendCommand implements Command {
     public void execute() {
 
     }
+
+    public String getMessage() {
+        return message;
+    }
 }
