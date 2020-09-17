@@ -1,6 +1,7 @@
 package com.acme.edu.server;
 
 import com.acme.edu.Decorator;
+import com.acme.edu.FileSaver;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -10,6 +11,7 @@ public class ServerRunner {
 
     public static void main(String[] args) {
         Decorator decorator = new Decorator();
+        FileSaver saver = new FileSaver("history.txt");
         String message = "";
         try (final ServerSocket connectionPortListener = new ServerSocket(10_000);
              final Socket clientConnection = connectionPortListener.accept();
@@ -24,6 +26,7 @@ public class ServerRunner {
             while (true) {
                 message = input.readUTF();
                 message = decorator.decorate(message);
+                saver.save(message);
                 out.writeUTF(message);
                 out.flush();
             }
