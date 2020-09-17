@@ -23,6 +23,7 @@ public class DecoratorTest implements SysoutCaptureAndAssertionAbility{
 
         assertSysoutContains(message);
     }
+
     @Test
     public void outShouldContainsCorrectDate(){
         String message= "test";
