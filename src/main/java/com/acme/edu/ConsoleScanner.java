@@ -3,8 +3,6 @@ package com.acme.edu;
 import java.util.Scanner;
 
 public class ConsoleScanner {
-    private static final String SEND_COMMAND = "/snd ";
-    private static final String HISTORY_COMMAND = "/hist";
 
     public String getMessageFromConsole() {
         Scanner scanner = new Scanner(System.in);
@@ -13,12 +11,12 @@ public class ConsoleScanner {
     }
 
     public String parseCommand(String command) {
-        if (command.contains(SEND_COMMAND)) {
-            command = command.replace(SEND_COMMAND, "");
-        } else if (command.equals(HISTORY_COMMAND)) {
+        if (command.contains(Command.SEND_COMMAND.getCommand() + " ")) {
+            command = command.replace(Command.SEND_COMMAND + " ", "");
+        } else if (command.equals(Command.HISTORY_COMMAND.getCommand())) {
             ///
-        } else {
-            ///
+        } else if (command.equals(Command.EXIT_COMMAND.getCommand())) {
+
         }
         return command;
     }
