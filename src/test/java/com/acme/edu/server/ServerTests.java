@@ -1,13 +1,13 @@
-package java.com.acme.edu.server;
+package com.acme.edu.server;
+
 import org.junit.Before;
 
 public class ServerTests {
 
-    private com.acme.edu.client.Client sut;
+    private Server sut;
 
     @Before
     public void setUp() {
     }
-
 
 }
