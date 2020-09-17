@@ -5,11 +5,14 @@ import com.acme.edu.Decorator;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Server {
-    static ExecutorService executeIt = Executors.newFixedThreadPool(2);
+    private static ExecutorService executeIt = Executors.newFixedThreadPool(2);
+    private BlockingQueue<String> messages = new LinkedBlockingQueue<String>();
     private final int port;
 
     public Server(int port) {
@@ -17,22 +20,38 @@ public class Server {
     }
 
     public void startServer() {
-        Decorator decorator = new Decorator();
-        String message = "";
-        try (final ServerSocket connectionPortListener = new ServerSocket(port);
-             final Socket clientConnection = connectionPortListener.accept();
-             final DataInputStream input = new DataInputStream(
-                     new BufferedInputStream(
-                             clientConnection.getInputStream()));
-             final DataOutputStream out = new DataOutputStream(
-                     new BufferedOutputStream(
-                             clientConnection.getOutputStream()))) {
-            message = input.readUTF();
-            message = decorator.decorate(message);
-            out.writeUTF(message);
-            out.flush();
+        try (ServerSocket server = new ServerSocket(port);
+             BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+             System.out.println("Server socket created, command console reader for listen to server commands");
+
+            while (!server.isClosed()) {
+                if (br.ready()) {
+                    System.out.println("Main Server found any messages in channel, let's look at them.");
+
+                    String serverCommand = br.readLine();
+                    if (serverCommand.equalsIgnoreCase("quit")) {
+                        System.out.println("Main Server initiate exiting...");
+                        server.close();
+                        break;
+                    }
+                }
+
+                Socket client = server.accept();
+                DataInputStream dis = new DataInputStream(
+                        new BufferedInputStream(
+                                client.getInputStream()));
+                DataOutputStream dos = new DataOutputStream(
+                        new BufferedOutputStream(
+                                client.getOutputStream()));
+
+                executeIt.execute(new MonoThreadClientHandler(client, dis, dos, messages));
+                System.out.print("Connection accepted.");
+            }
+
+            executeIt.shutdown();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
+
