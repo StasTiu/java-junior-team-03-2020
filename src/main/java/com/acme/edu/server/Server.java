@@ -5,6 +5,8 @@ import com.acme.edu.Decorator;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -13,6 +15,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Server {
     private static ExecutorService executeIt = Executors.newFixedThreadPool(2);
     private BlockingQueue<String> messages = new LinkedBlockingQueue<String>();
+    private ArrayList<Socket> sockets = new ArrayList<>();
     private final int port;
 
     public Server(int port) {
@@ -44,10 +47,9 @@ public class Server {
                         new BufferedOutputStream(
                                 client.getOutputStream()));
 
-                executeIt.execute(new MonoThreadClientHandler(client, dis, dos, messages));
+                executeIt.execute(new MonoThreadClientHandler(client, dis, dos, sockets));
                 System.out.print("Connection accepted.");
             }
-
             executeIt.shutdown();
         } catch (IOException e) {
             e.printStackTrace();

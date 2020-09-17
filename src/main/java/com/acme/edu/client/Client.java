@@ -15,7 +15,7 @@ public class Client {
         boolean needExit = false;
         ConfigPropertyValues properties = new ConfigPropertyValues();
 
-        try (final Socket connection = new Socket(properties.getHost(), properties.getPort());
+        try (final Socket connection = new Socket("localhost", 10_000); //(properties.getHost(), properties.getPort());
              final DataInputStream input = new DataInputStream(
                      new BufferedInputStream(
                              connection.getInputStream()));

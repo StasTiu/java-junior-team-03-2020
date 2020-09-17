@@ -10,6 +10,12 @@ import java.net.Socket;
 
 public class ServerRunner {
 
+    public static void main(String[] args) throws IOException {
+        ConfigPropertyValues properties = new ConfigPropertyValues();
+        Server server  = new Server(10_000);
+        server.startServer();
+    }
+    /*
     public static void main(String[] args) {
         Decorator decorator = new Decorator();
         FileSaver saver = new FileSaver("history.txt");
@@ -36,5 +42,5 @@ public class ServerRunner {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
