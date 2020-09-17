@@ -1,7 +1,7 @@
 package com.acme.edu;
 
 public class Command {
-    private String message = "";
+    private String message;
     private CommandType type;
 
     public Command(CommandType type, String message) {

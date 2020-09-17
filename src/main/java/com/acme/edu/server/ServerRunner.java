@@ -21,10 +21,12 @@ public class ServerRunner {
                              clientConnection.getOutputStream()))) {
 
 
-            message = input.readUTF();
-            message = decorator.decorate(message);
-            out.writeUTF(message);
-            out.flush();
+            while (true) {
+                message = input.readUTF();
+                message = decorator.decorate(message);
+                out.writeUTF(message);
+                out.flush();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

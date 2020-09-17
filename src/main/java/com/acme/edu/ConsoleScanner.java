@@ -13,7 +13,7 @@ public class ConsoleScanner {
     public Command parseCommand(String input) {
         Command command = null;
         if (input.contains(CommandType.SEND_COMMAND.getCommand() + " ")) {
-            String message = input.replace(CommandType.SEND_COMMAND + " ", "");
+            String message = input.replace(CommandType.SEND_COMMAND.getCommand() + " ", "");
             command = new Command(CommandType.SEND_COMMAND, message);
         } else if (input.equals(CommandType.HISTORY_COMMAND.getCommand())) {
             ///
