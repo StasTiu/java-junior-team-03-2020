@@ -3,6 +3,7 @@ package com.acme.edu.server;
 import com.acme.edu.ConfigPropertyValues;
 import com.acme.edu.Decorator;
 import com.acme.edu.FileSaver;
+import com.acme.edu.HistoryWriter;
 
 import java.io.*;
 import java.net.ServerSocket;

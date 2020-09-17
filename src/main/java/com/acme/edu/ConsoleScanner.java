@@ -16,7 +16,7 @@ public class ConsoleScanner {
             String message = input.replace(CommandType.SEND_COMMAND.getCommand() + " ", "");
             command = new Command(CommandType.SEND_COMMAND, message);
         } else if (input.equals(CommandType.HISTORY_COMMAND.getCommand())) {
-            ///
+            command = new Command(CommandType.HISTORY_COMMAND);
         } else if (input.equals(CommandType.EXIT_COMMAND.getCommand())) {
             command = new Command(CommandType.EXIT_COMMAND);
         } else {
