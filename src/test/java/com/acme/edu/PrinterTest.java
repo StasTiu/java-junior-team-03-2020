@@ -14,7 +14,7 @@ public class PrinterTest implements SysoutCaptureAndAssertionAbility{
     }
 
     @Test
-    public void outShouldContainsMessage(){
+    public void outShouldPrintCorrectMessageToConsole(){
         String message= "test";
 
         sut.print(message);
