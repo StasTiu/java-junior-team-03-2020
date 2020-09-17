@@ -21,7 +21,7 @@ public class Client {
                                  connection.getOutputStream()));
             ) {
                 String message = scanner.getMessageFromConsole();
-                if (message.equals())
+                if (message.equals(""))
                     out.writeUTF(scanner.getMessageFromConsole());
                 out.flush();
                 printer.print(input.readUTF());
