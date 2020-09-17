@@ -1,5 +1,6 @@
 package com.acme.edu.server;
 
+import com.acme.edu.ConfigPropertyValues;
 import com.acme.edu.Decorator;
 import com.acme.edu.FileSaver;
 
@@ -13,7 +14,9 @@ public class ServerRunner {
         Decorator decorator = new Decorator();
         FileSaver saver = new FileSaver("history.txt");
         String message = "";
-        try (final ServerSocket connectionPortListener = new ServerSocket(10_000);
+        ConfigPropertyValues properties = new ConfigPropertyValues();
+
+        try (final ServerSocket connectionPortListener = new ServerSocket(properties.getPort());
              final Socket clientConnection = connectionPortListener.accept();
              final DataInputStream input = new DataInputStream(
                      new BufferedInputStream(
