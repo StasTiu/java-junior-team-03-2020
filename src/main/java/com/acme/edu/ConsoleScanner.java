@@ -4,19 +4,23 @@ import java.util.Scanner;
 
 public class ConsoleScanner {
 
-    public String getMessageFromConsole() {
+    public Command getMessageFromConsole() {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         return parseCommand(input);
     }
 
-    public String parseCommand(String command) {
-        if (command.contains(Command.SEND_COMMAND.getCommand() + " ")) {
-            command = command.replace(Command.SEND_COMMAND + " ", "");
-        } else if (command.equals(Command.HISTORY_COMMAND.getCommand())) {
-            ///
-        } else if (command.equals(Command.EXIT_COMMAND.getCommand())) {
-
+    public Command parseCommand(String input) {
+        Command command = null;
+        if (!input.contains(CommandType.SEND_COMMAND.getCommand() + " ")) {
+            if (input.equals(CommandType.HISTORY_COMMAND.getCommand())) {
+                ///
+            } else if (input.equals(CommandType.EXIT_COMMAND.getCommand())) {
+    
+            }
+        } else {
+            String message = input.replace(CommandType.SEND_COMMAND + " ", "");
+            command = new SendCommand(message);
         }
         return command;
     }

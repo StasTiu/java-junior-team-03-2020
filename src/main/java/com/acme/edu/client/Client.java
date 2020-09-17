@@ -1,5 +1,6 @@
 package com.acme.edu.client;
 
+import com.acme.edu.Command;
 import com.acme.edu.ConsoleScanner;
 import com.acme.edu.Printer;
 
@@ -20,7 +21,7 @@ public class Client {
                          new BufferedOutputStream(
                                  connection.getOutputStream()));
             ) {
-                String message = scanner.getMessageFromConsole();
+                Command message = scanner.getMessageFromConsole();
                 if (message.equals())
                     out.writeUTF(scanner.getMessageFromConsole());
                 out.flush();
