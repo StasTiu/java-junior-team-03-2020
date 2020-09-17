@@ -20,11 +20,13 @@ public class Client {
                                  connection.getOutputStream()));
             ) {
                 Command command = scanner.getCommandFromConsole();
-                if (command instanceof SendCommand) {
-                    out.writeUTF(((SendCommand) command).getMessage());
-                } else if (command instanceof ExitCommand) {
-                    needExit = true;
-                    continue;
+                switch (command.getType()) {
+                    case SEND_COMMAND:
+                        out.writeUTF(command.getMessage());
+                        break;
+                    case EXIT_COMMAND:
+                        needExit = true;
+                        continue;
                 }
                 out.flush();
                 printer.print(input.readUTF());
