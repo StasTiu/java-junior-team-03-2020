@@ -40,7 +40,7 @@ public class Client {
                             needExit = true;
                             continue;
                         case HISTORY_COMMAND:
-                            writer.write();
+                            writer.write(command.getMessage());
                             continue;
                         case UNKNOWN_COMMAND:
                             printer.print("unknown command, try one more time");

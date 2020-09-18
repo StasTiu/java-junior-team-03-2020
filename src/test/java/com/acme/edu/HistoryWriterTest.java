@@ -24,7 +24,7 @@ public class HistoryWriterTest implements SysoutCaptureAndAssertionAbility{
 
     @Test
     public void messageIsPrintedToFileWhenSave() throws IOException {
-        sut.write();
+        sut.write("");
 
         assertSysoutContains("test string 1");
         assertSysoutContains("test string 2");
@@ -34,6 +34,6 @@ public class HistoryWriterTest implements SysoutCaptureAndAssertionAbility{
     @Test(expected = NullPointerException.class)
     public void shouldTrowNPEIfFileNameIsNull() throws IOException {
         sut = new HistoryWriter(null);
-        sut.write();
+        sut.write("");
     }
 }

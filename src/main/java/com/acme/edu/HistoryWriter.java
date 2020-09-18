@@ -10,7 +10,7 @@ public class HistoryWriter {
         this.fileInfo = new File(fileInfo);
     }
 
-    public void write() throws IOException{
+    public void write(String date) throws IOException{
         try (BufferedReader br =
                      new BufferedReader(
                              new InputStreamReader(
@@ -18,7 +18,7 @@ public class HistoryWriter {
                                              new FileInputStream(fileInfo)), StandardCharsets.UTF_8))){
 
             String readLine = null;
-            while ((readLine = br.readLine()) != null) {
+            while ((readLine = br.readLine()) != null && readLine.contains(date)) {
                 System.out.println(">> " + readLine + System.lineSeparator());
             }
         } catch (IOException e) {
