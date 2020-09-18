@@ -19,7 +19,7 @@ public class HistoryWriter {
 
             String readLine = null;
             while ((readLine = br.readLine()) != null && readLine.contains(date)) {
-                System.out.println(">> " + readLine + System.lineSeparator());
+                System.out.println(">> " + readLine);
             }
         } catch (IOException e) {
             e.printStackTrace();
