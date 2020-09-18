@@ -13,7 +13,7 @@ public class Client {
         boolean needExit = false;
         ConfigReader properties = new ConfigReader();
 
-        try (final Socket connection = new Socket(properties.getHost(), properties.getPort()); //(properties.getHost(), properties.getPort());
+        try (final Socket connection = new Socket(properties.getHost(), properties.getPort());
              final DataInputStream input = new DataInputStream(
                      new BufferedInputStream(
                              connection.getInputStream()));
