@@ -15,9 +15,9 @@ public class ConfigReader {
         String value = "";
         String propFileName = "application.properties";
 
-        try {
+        try (FileInputStream inputStream = new FileInputStream(propFileName);) {
             Properties prop = new Properties();
-            inputStream = new FileInputStream(propFileName);
+
             prop.load(inputStream);
 
             value = prop.getProperty(propertyName);

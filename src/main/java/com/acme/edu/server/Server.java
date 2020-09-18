@@ -43,6 +43,7 @@ public class Server {
                 System.out.print("Connection accepted.");
             }
             executeIt.shutdown();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

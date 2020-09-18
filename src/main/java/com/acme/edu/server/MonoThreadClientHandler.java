@@ -6,6 +6,7 @@ import com.acme.edu.Decorator;
 import com.acme.edu.FileSaver;
 
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 
 public class MonoThreadClientHandler implements Runnable {
@@ -24,7 +25,7 @@ public class MonoThreadClientHandler implements Runnable {
         String message = "";
         try (final DataInputStream input = inputStream;) {
 
-            while (true) {
+            while (!Thread.currentThread().isInterrupted()) {
                 message = input.readUTF();
                 ConsoleScanner scanner = new ConsoleScanner();
                 Command command = scanner.parseCommand(message);
@@ -38,6 +39,8 @@ public class MonoThreadClientHandler implements Runnable {
                         Thread.currentThread().interrupt();
                 }
             }
+        } catch (EOFException e) {
+            System.out.println("Client disconnected");
         } catch (IOException e) {
             e.printStackTrace();
         }
