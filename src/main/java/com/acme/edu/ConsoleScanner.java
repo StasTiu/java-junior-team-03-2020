@@ -19,8 +19,11 @@ public class ConsoleScanner {
             command = new Command(CommandType.HISTORY_COMMAND);
         } else if (input.equals(CommandType.EXIT_COMMAND.getCommand())) {
             command = new Command(CommandType.EXIT_COMMAND);
-        } else {
-            //
+        } else if(input.contains(CommandType.ID_COMMAND.getCommand() + " ")){
+            String chid = input.replace(CommandType.ID_COMMAND.getCommand() + " ", "");
+            command = new Command(CommandType.ID_COMMAND, chid);
+        }else {
+            command = new Command(CommandType.UNKNOWN_COMMAND);
         }
         return command;
     }

@@ -11,7 +11,7 @@ public class FileSaver {
     }
 
     public void save(String message) throws IOException{
-//        if (message == null) throw new FileLoggerSaverException("Empty message!");
+        if (message == null) throw new IOException("Empty message!");
 
         try (BufferedWriter bw =
                      new BufferedWriter(

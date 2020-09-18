@@ -49,6 +49,9 @@ public class MonoThreadClientHandler implements Runnable {
                         server.sendToAll(response);
                         saver.save(response);
                         break;
+                    case ID_COMMAND:
+                        decorator = new Decorator(command.getMessage());
+                        continue;
                     case EXIT_COMMAND:
                         Thread.currentThread().interrupt();
                         continue;
