@@ -6,12 +6,15 @@ import java.io.*;
 import java.net.Socket;
 
 public class Client {
+
     public static void main(String[] args) {
         Printer printer = new Printer();
         HistoryWriter writer = new HistoryWriter("history.txt");
         ConsoleScanner scanner = new ConsoleScanner();
         boolean needExit = false;
         ConfigReader properties = new ConfigReader();
+
+        String chid = "";
 
         try (final Socket connection = new Socket(properties.getHost(), properties.getPort()); //(properties.getHost(), properties.getPort());
              final DataInputStream input = new DataInputStream(
@@ -26,10 +29,11 @@ public class Client {
                 Command command = scanner.getCommandFromConsole();
                 switch (command.getType()) {
                     case SEND_COMMAND:
-                        out.writeUTF(command.getType().getCommand() + " "  + command.getMessage());
+                        out.writeUTF(command.getType().getCommand() + " "  + chid + ": " + command.getMessage());
                         break;
                     case ID_COMMAND:
-                        out.writeUTF(command.getType().getCommand() + " "  + command.getMessage());
+                        chid = command.getMessage();
+                        //out.writeUTF(command.getType().getCommand() + " "  + command.getMessage());
                         continue;
                     case EXIT_COMMAND:
                         needExit = true;
