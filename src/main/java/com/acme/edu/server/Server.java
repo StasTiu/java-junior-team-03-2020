@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Server {
-    private static ExecutorService executeIt = Executors.newFixedThreadPool(2);
+    private static ExecutorService executeIt = Executors.newCachedThreadPool();
     private BlockingQueue<String> messages = new LinkedBlockingQueue<String>();
     private ArrayList<Socket> sockets = new ArrayList<>();
     private final int port;
