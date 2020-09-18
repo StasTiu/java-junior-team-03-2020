@@ -28,6 +28,9 @@ public class Client {
                     case SEND_COMMAND:
                         out.writeUTF(command.getType().getCommand() + " "  + command.getMessage());
                         break;
+                    case ID_COMMAND:
+                        out.writeUTF(command.getType().getCommand() + " "  + command.getMessage());
+                        continue;
                     case EXIT_COMMAND:
                         needExit = true;
                         continue;
