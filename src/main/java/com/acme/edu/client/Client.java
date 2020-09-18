@@ -34,17 +34,16 @@ public class Client {
                             out.writeUTF(command.getType().getCommand() + " "  + chid + ": " + command.getMessage());
                             break;
                         case ID_COMMAND:
-                        chid = command.getMessage();
-                        //out.writeUTF(command.getType().getCommand() + " "  + command.getMessage());
-                        continue;
-                    case EXIT_COMMAND:
+                            chid = command.getMessage();
+                            continue;
+                        case EXIT_COMMAND:
                             needExit = true;
                             continue;
                         case HISTORY_COMMAND:
                             writer.write();
-                        continue;
-                    case UNKNOWN_COMMAND:
-                        printer.print("unknown command, try one more time");
+                            continue;
+                        case UNKNOWN_COMMAND:
+                            printer.print("unknown command, try one more time");
                             continue;
                     }
                     out.flush();
