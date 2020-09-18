@@ -20,7 +20,7 @@ public class ConsoleScanner {
         } else if (input.equals(CommandType.EXIT_COMMAND.getCommand())) {
             command = new Command(CommandType.EXIT_COMMAND);
         } else {
-            //
+            command = new Command(CommandType.UNKNOWN_COMMAND);
         }
         return command;
     }

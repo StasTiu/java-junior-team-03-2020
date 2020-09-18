@@ -30,14 +30,17 @@ public class Client {
                 Command command = scanner.getCommandFromConsole();
                 switch (command.getType()) {
                     case SEND_COMMAND:
-                        out.writeUTF(command.getMessage());
+                        out.writeUTF(command.getType().getCommand() + " "  + command.getMessage());
                         break;
                     case EXIT_COMMAND:
                         needExit = true;
                         continue;
                     case HISTORY_COMMAND:
                         writer.write();
-                        break;
+                        continue;
+                    case UNKNOWN_COMMAND:
+                        printer.print("unknown command, try one more time");
+                        continue;
                 }
                 out.flush();
                 printer.print(input.readUTF());
