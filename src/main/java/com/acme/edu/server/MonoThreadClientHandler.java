@@ -37,8 +37,9 @@ public class MonoThreadClientHandler implements Runnable {
 
             while (true) {
                 message = input.readUTF();
+                System.out.println(message);
                 ConsoleScanner scanner = new ConsoleScanner();
-                Command command = scanner.getCommandFromConsole();
+                Command command = scanner.parseCommand(message);
                 switch (command.getType()) {
                     case SEND_COMMAND:
                         String response = decorator.decorate(command.getMessage());
@@ -46,12 +47,12 @@ public class MonoThreadClientHandler implements Runnable {
                             sendToAll(response);
                         }*/
                         send(response);
+                        saver.save(response);
                         break;
                     case EXIT_COMMAND:
                         Thread.currentThread().interrupt();
                         continue;
                 }
-                saver.save(message);
                 out.flush();
 
             }

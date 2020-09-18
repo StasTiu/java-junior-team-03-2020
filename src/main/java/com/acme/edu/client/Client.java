@@ -27,11 +27,10 @@ public class Client {
         ) {
 
             while (!needExit) {
-                out.flush();
                 Command command = scanner.getCommandFromConsole();
                 switch (command.getType()) {
                     case SEND_COMMAND:
-                        out.writeUTF(command.getMessage());
+                        out.writeUTF(command.getType().getCommand() + " "  + command.getMessage());
                         break;
                     case EXIT_COMMAND:
                         needExit = true;
