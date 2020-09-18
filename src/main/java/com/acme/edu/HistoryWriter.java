@@ -18,8 +18,10 @@ public class HistoryWriter {
                                              new FileInputStream(fileInfo)), StandardCharsets.UTF_8))){
 
             String readLine = null;
-            while ((readLine = br.readLine()) != null && readLine.contains(date)) {
-                System.out.println(">> " + readLine);
+            while ((readLine = br.readLine()) != null) {
+                if(readLine.contains(date)) {
+                    System.out.println(">> " + readLine);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
