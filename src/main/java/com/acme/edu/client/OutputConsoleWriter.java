@@ -2,10 +2,8 @@ package com.acme.edu.client;
 
 import com.acme.edu.Printer;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class OutputConsoleWriter implements Runnable {
     private final Printer out;
@@ -21,7 +19,7 @@ public class OutputConsoleWriter implements Runnable {
         try {
             while (!Thread.currentThread().isInterrupted()) {
                 String inputData = in.readUTF();
-                if (inputData != null && !inputData.isEmpty()) {
+                if (!inputData.isEmpty()) {
                     out.print(inputData);
                 }
             }
