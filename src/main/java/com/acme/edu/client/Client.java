@@ -35,7 +35,7 @@ public class Client {
                 switch (command.getType()) {
                     case SEND_COMMAND:
                         if(command.getMessage().replaceAll(" ","").isEmpty()){
-                            printer.print("empty message");
+                            printer.print("please enter message");
                         }else {
                             out.writeUTF(command.getType().getCommand() + " " + chid + ": " + command.getMessage());
                         }
