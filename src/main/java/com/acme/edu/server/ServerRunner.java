@@ -1,19 +1,14 @@
 package com.acme.edu.server;
 
-import com.acme.edu.ConfigPropertyValues;
-import com.acme.edu.Decorator;
-import com.acme.edu.FileSaver;
-import com.acme.edu.HistoryWriter;
+import com.acme.edu.ConfigReader;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 public class ServerRunner {
 
     public static void main(String[] args) throws IOException {
-        ConfigPropertyValues properties = new ConfigPropertyValues();
-        Server server  = new Server(10_000);
+        ConfigReader properties = new ConfigReader();
+        Server server  = new Server(properties.getPort());
         server.startServer();
     }
     /*
@@ -21,7 +16,7 @@ public class ServerRunner {
         Decorator decorator = new Decorator();
         FileSaver saver = new FileSaver("history.txt");
         String message = "";
-        ConfigPropertyValues properties = new ConfigPropertyValues();
+        ConfigReader properties = new ConfigReader();
 
         try (final ServerSocket connectionPortListener = new ServerSocket(properties.getPort());
              final Socket clientConnection = connectionPortListener.accept();

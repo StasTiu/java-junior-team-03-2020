@@ -1,10 +1,6 @@
 package com.acme.edu.client;
 
-import com.acme.edu.Command;
-import com.acme.edu.ConfigPropertyValues;
-import com.acme.edu.ConsoleScanner;
-import com.acme.edu.HistoryWriter;
-import com.acme.edu.Printer;
+import com.acme.edu.*;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,9 +11,9 @@ public class Client {
         HistoryWriter writer = new HistoryWriter("history.txt");
         ConsoleScanner scanner = new ConsoleScanner();
         boolean needExit = false;
-        ConfigPropertyValues properties = new ConfigPropertyValues();
+        ConfigReader properties = new ConfigReader();
 
-        try (final Socket connection = new Socket("localhost", 10_000); //(properties.getHost(), properties.getPort());
+        try (final Socket connection = new Socket(properties.getHost(), properties.getPort()); //(properties.getHost(), properties.getPort());
              final DataInputStream input = new DataInputStream(
                      new BufferedInputStream(
                              connection.getInputStream()));
