@@ -52,6 +52,7 @@ public class Server {
     public void sendToAll(String message) {
         synchronized (sockets) {
             sockets.forEach(s -> {
+                if (s.isClosed()) return;
                 try {
                     OutputStream out = s.getOutputStream();
                     DataOutputStream dos = new DataOutputStream(

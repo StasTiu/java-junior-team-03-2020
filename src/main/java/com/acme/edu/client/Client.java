@@ -8,17 +8,23 @@ import java.io.*;
 import java.net.Socket;
 
 public class Client {
+    private final String host;
+    private final int port;
 
-    public static void main(String[] args) {
+    public Client(String host, int port) {
+        this.host = host;
+        this.port = port;
+    }
+
+    public void start() {
         Printer printer = new Printer();
         HistoryWriter writer = new HistoryWriter("history.txt");
         ConsoleScanner scanner = new ConsoleScanner();
-        ConfigReader properties = new ConfigReader();
 
         String chid = "";
 
         try (
-                final Socket connection = new Socket(properties.getHost(), properties.getPort());
+                final Socket connection = new Socket(host, port);
                 final DataOutputStream out = new DataOutputStream(
                         new BufferedOutputStream(
                         connection.getOutputStream()));
