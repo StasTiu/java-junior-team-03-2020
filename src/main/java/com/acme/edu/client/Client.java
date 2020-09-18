@@ -15,6 +15,8 @@ public class Client {
         ConsoleScanner scanner = new ConsoleScanner();
         ConfigReader properties = new ConfigReader();
 
+        String chid = "";
+
         try (
                 final Socket connection = new Socket(properties.getHost(), properties.getPort());
                 final DataOutputStream out = new DataOutputStream(
@@ -32,19 +34,19 @@ public class Client {
                 Command command = scanner.getCommandFromConsole();
                 switch (command.getType()) {
                     case SEND_COMMAND:
-                        out.writeUTF(command.getType().getCommand() + " "  + command.getMessage());
+                        out.writeUTF(command.getType().getCommand() + " "  + chid + ": " + command.getMessage());
                         break;
                     case ID_COMMAND:
-                        out.writeUTF(command.getType().getCommand() + " "  + command.getMessage());
-                        continue;
-                    case EXIT_COMMAND:
+                            chid = command.getMessage();
+                            continue;
+                        case EXIT_COMMAND:
                         Thread.currentThread().interrupt();
                         continue;
                     case HISTORY_COMMAND:
                         writer.write();
-                        continue;
-                    case UNKNOWN_COMMAND:
-                        printer.print("unknown command, try one more time");
+                            continue;
+                        case UNKNOWN_COMMAND:
+                            printer.print("unknown command, try one more time");
                         continue;
                 }
                 out.flush();
