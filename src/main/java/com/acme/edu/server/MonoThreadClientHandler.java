@@ -43,10 +43,11 @@ public class MonoThreadClientHandler implements Runnable {
                 switch (command.getType()) {
                     case SEND_COMMAND:
                         String response = decorator.decorate(command.getMessage());
+                        sendToAll(response);
                         /*synchronized (sockets) {
                             sendToAll(response);
                         }*/
-                        send(response);
+                        //send(response);
                         saver.save(response);
                         break;
                     case EXIT_COMMAND:
@@ -65,8 +66,24 @@ public class MonoThreadClientHandler implements Runnable {
         outputStream.writeUTF(message);
     }
 
-    public synchronized void sendToAll(String message) {
-        Iterator<Socket> iter = sockets.iterator();
+    public void sendToAll(String message) {
+        System.out.println(sockets.toArray().length);
+        sockets.forEach(s -> {
+            Socket socket = s;
+            try {
+                OutputStream out = socket.getOutputStream();
+                DataOutputStream dos = new DataOutputStream(
+                        new BufferedOutputStream(out));
+                System.out.println(out);
+                //PrintWriter writer = new PrintWriter(out);
+                dos.writeUTF(message);
+                dos.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        /*Iterator<Socket> iter = sockets.iterator();
         while ( iter.hasNext() ) {
             Socket socket = iter.next();
             try {
@@ -78,6 +95,6 @@ public class MonoThreadClientHandler implements Runnable {
                 e.printStackTrace();
                 iter.remove();
             }
-        }
+        }*/
     }
 }

@@ -40,6 +40,7 @@ public class Server {
                 }
 
                 Socket client = server.accept();
+                sockets.add(client);
                 DataInputStream dis = new DataInputStream(
                         new BufferedInputStream(
                                 client.getInputStream()));
