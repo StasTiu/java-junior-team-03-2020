@@ -3,7 +3,8 @@ package com.acme.edu;
 public enum CommandType {
     SEND_COMMAND("/snd"),
     HISTORY_COMMAND("/hist"),
-    EXIT_COMMAND("/exit");
+    EXIT_COMMAND("/exit"),
+    UNKNOWN_COMMAND("/unknown");
 
 
     private final String command;

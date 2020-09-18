@@ -27,6 +27,7 @@ public class Client {
         ) {
 
             while (!needExit) {
+                out.flush();
                 Command command = scanner.getCommandFromConsole();
                 switch (command.getType()) {
                     case SEND_COMMAND:
@@ -37,7 +38,10 @@ public class Client {
                         continue;
                     case HISTORY_COMMAND:
                         writer.write();
-                        break;
+                        continue;
+                    case UNKNOWN_COMMAND:
+                        printer.print("unknown command, try one more time");
+                        continue;
                 }
                 out.flush();
                 printer.print(input.readUTF());
