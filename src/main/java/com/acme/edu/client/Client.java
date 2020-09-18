@@ -34,7 +34,11 @@ public class Client {
                 Command command = scanner.getCommandFromConsole();
                 switch (command.getType()) {
                     case SEND_COMMAND:
-                        out.writeUTF(command.getType().getCommand() + " "  + chid + ": " + command.getMessage());
+                        if(command.getMessage().replaceAll(" ","").isEmpty()){
+                            printer.print("empty message");
+                        }else {
+                            out.writeUTF(command.getType().getCommand() + " " + chid + ": " + command.getMessage());
+                        }
                         break;
                     case ID_COMMAND:
                             chid = command.getMessage();
