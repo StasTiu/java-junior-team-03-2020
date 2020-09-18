@@ -6,6 +6,8 @@ import com.acme.edu.ConsoleScanner;
 import com.acme.edu.HistoryWriter;
 import com.acme.edu.Printer;
 
+import java.nio.*;
+import java.io.IOException;
 import java.io.*;
 import java.net.Socket;
 
@@ -25,21 +27,23 @@ public class Client {
                      new BufferedOutputStream(
                              connection.getOutputStream()));
         ) {
-
             while (!needExit) {
-                Command command = scanner.getCommandFromConsole();
-                switch (command.getType()) {
-                    case SEND_COMMAND:
-                        out.writeUTF(command.getType().getCommand() + " "  + command.getMessage());
-                        break;
-                    case EXIT_COMMAND:
-                        needExit = true;
-                        continue;
-                    case HISTORY_COMMAND:
-                        writer.write();
-                        continue;
-                }
-                out.flush();
+                do {
+                    Command command = scanner.getCommandFromConsole();
+                    switch (command.getType()) {
+                        case SEND_COMMAND:
+                            out.writeUTF(command.getType().getCommand() + " "  + command.getMessage());
+                            break;
+                        case EXIT_COMMAND:
+                            needExit = true;
+                            continue;
+                        case HISTORY_COMMAND:
+                            writer.write();
+                            continue;
+                    }
+                    out.flush();
+                } while (System.in.available() > 0);
+
                 printer.print(input.readUTF());
             }
         } catch (IOException e) {

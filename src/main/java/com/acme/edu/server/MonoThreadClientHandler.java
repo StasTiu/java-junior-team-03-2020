@@ -16,15 +16,14 @@ public class MonoThreadClientHandler implements Runnable {
     private final Socket socket;
     private final DataInputStream inputStream;
     private final DataOutputStream outputStream;
-    //private final BlockingQueue<String> messages;
-    private final ArrayList<Socket> sockets;
+    private final Server server;
     private FileSaver saver = new FileSaver("history.txt");
 
-    public MonoThreadClientHandler(Socket socket, DataInputStream inputStream, DataOutputStream outputStream, ArrayList<Socket> sockets) {
+    public MonoThreadClientHandler(Socket socket, DataInputStream inputStream, DataOutputStream outputStream, Server server) {
         this.socket = socket;
         this.inputStream = inputStream;
         this.outputStream = outputStream;
-        this.sockets = sockets;
+        this.server = server;
     }
 
     @Override
@@ -43,18 +42,18 @@ public class MonoThreadClientHandler implements Runnable {
                 switch (command.getType()) {
                     case SEND_COMMAND:
                         String response = decorator.decorate(command.getMessage());
-                        sendToAll(response);
                         /*synchronized (sockets) {
                             sendToAll(response);
                         }*/
                         //send(response);
+                        server.sendToAll(response);
                         saver.save(response);
                         break;
                     case EXIT_COMMAND:
                         Thread.currentThread().interrupt();
                         continue;
                 }
-                out.flush();
+                //out.flush();
 
             }
         } catch (IOException e) {
@@ -64,37 +63,5 @@ public class MonoThreadClientHandler implements Runnable {
 
     public void send(String message) throws IOException {
         outputStream.writeUTF(message);
-    }
-
-    public void sendToAll(String message) {
-        System.out.println(sockets.toArray().length);
-        sockets.forEach(s -> {
-            Socket socket = s;
-            try {
-                OutputStream out = socket.getOutputStream();
-                DataOutputStream dos = new DataOutputStream(
-                        new BufferedOutputStream(out));
-                System.out.println(out);
-                //PrintWriter writer = new PrintWriter(out);
-                dos.writeUTF(message);
-                dos.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        /*Iterator<Socket> iter = sockets.iterator();
-        while ( iter.hasNext() ) {
-            Socket socket = iter.next();
-            try {
-                OutputStream out = socket.getOutputStream();
-                PrintWriter writer = new PrintWriter(out);
-                writer.println(message);
-                writer.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-                iter.remove();
-            }
-        }*/
     }
 }

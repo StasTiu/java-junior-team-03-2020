@@ -48,13 +48,46 @@ public class Server {
                         new BufferedOutputStream(
                                 client.getOutputStream()));
 
-                executeIt.execute(new MonoThreadClientHandler(client, dis, dos, sockets));
+                executeIt.execute(new MonoThreadClientHandler(client, dis, dos, this));
                 System.out.print("Connection accepted.");
             }
             executeIt.shutdown();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendToAll(String message) {
+        System.out.println(sockets.toArray().length);
+        synchronized (sockets) {
+        sockets.forEach(s -> {
+            Socket socket = s;
+            try {
+                OutputStream out = socket.getOutputStream();
+                DataOutputStream dos = new DataOutputStream(
+                        new BufferedOutputStream(out));
+                System.out.println(dos);
+                //PrintWriter writer = new PrintWriter(out);
+                dos.writeUTF(message);
+                dos.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });}
+
+        /*Iterator<Socket> iter = sockets.iterator();
+        while ( iter.hasNext() ) {
+            Socket socket = iter.next();
+            try {
+                OutputStream out = socket.getOutputStream();
+                PrintWriter writer = new PrintWriter(out);
+                writer.println(message);
+                writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+                iter.remove();
+            }
+        }*/
     }
 }
 
